@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { UserRegistrationContext } from "../../App";
+import { connect } from "react-redux";
+import { registerUser, removeRegisteredUser } from "../../redux/Actions";
 import "./Register.css";
 
-function Register() {
+function Register({ registerUser, removeRegisteredUser }) {
   const [registration, setRegistration] = useState(false);
-
-  const { setUserRegistration } = useContext(UserRegistrationContext);
 
   const {
     register,
@@ -17,8 +16,14 @@ function Register() {
   } = useForm();
 
   const onSubmit = (values) => {
-    setUserRegistration(values);
+    registerUser(values);
     setRegistration(true);
+  };
+
+  const handleClearState = () => {
+    setRegistration(false);
+    removeRegisteredUser();
+    reset();
   };
 
   const password = watch("password", "");
@@ -36,14 +41,7 @@ function Register() {
               <div className="success">
                 <p>Registration Successful</p>
               </div>
-              <button
-                className="clear-state"
-                onClick={() => {
-                  setUserRegistration({});
-                  setRegistration();
-                  reset();
-                }}
-              >
+              <button className="clear-state" onClick={handleClearState}>
                 Clear user state
               </button>
             </div>
@@ -124,4 +122,11 @@ function Register() {
   );
 }
 
-export default Register;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    registerUser: (details) => dispatch(registerUser(details)),
+    removeRegisteredUser: () => dispatch(removeRegisteredUser()),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Register);
