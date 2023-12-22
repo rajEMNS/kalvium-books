@@ -99,7 +99,7 @@ function Register({ registerUser, removeRegisteredUser }) {
                 <p className="err">{errors.password.message}</p>
               )}
 
-              <label>Repeat Password:</label>
+              <label>Confirm Password:</label>
               <input
                 type="password"
                 className="password"
@@ -113,7 +113,7 @@ function Register({ registerUser, removeRegisteredUser }) {
                 <p className="err">{errors.repeatPassword.message}</p>
               )}
 
-              <input type="submit" value="Submit" />
+              <input type="submit" value="Register" />
             </>
           )}
         </form>
