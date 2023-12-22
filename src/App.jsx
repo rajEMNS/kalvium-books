@@ -17,6 +17,7 @@ function App() {
 
   useEffect(() => {
     if (searchQuery === "") {
+      setLoader(true);
       axiosInstance.get("/books").then((res) => {
         setBooksData(res.data);
         setLoader(false);
